@@ -1,4 +1,3 @@
-import * as graphql from 'graphql';
 import User from './User.model';
 
 interface args {
@@ -16,25 +15,17 @@ const userType = `
     }
 `;
 
-export async userResolver(root:any, args:any, ctx:any): Promise<User> {
-    console.log(args.id, ctx);
-    
-    try {
-    return await User.findOne({name: args.name}, 'first', function (err, doc){
-        console.log(err, doc);
-        if (!err) {
+export async function userResolver(root:any, args:any, ctx:any): Promise<any> {
+    console.log('user resolver');
+    //args.id = 'Johny';
+    return await User.findOne({name: args.id}, (err: Error, doc: User) => {
+        console.log('sdasdasdas', doc);
+        if (err) {
             console.log('try to find, no err');
-            }
-        });
-        return {
-            name: 'fake',
-            email: 'fake'
+            return new Error(err);
         }
-    } catch (err) {
-        console.log(err)
-    }
-
-    
+        return doc;
+    });
 };
 
 export const usersResolver = () => User.find();
