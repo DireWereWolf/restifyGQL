@@ -16,19 +16,25 @@ const userType = `
     }
 `;
 
-export const userResolver = (root:any, args:any, ctx:any) => {
+export async userResolver(root:any, args:any, ctx:any): Promise<User> {
     console.log(args.id, ctx);
-
-    User.findOne({name: args.name}, 'first', function (err, doc){
+    
+    try {
+    return await User.findOne({name: args.name}, 'first', function (err, doc){
         console.log(err, doc);
         if (!err) {
             console.log('try to find, no err');
+            }
+        });
+        return {
+            name: 'fake',
+            email: 'fake'
         }
-    });
-    return {
-        name: 'fake',
-        email: 'fake'
+    } catch (err) {
+        console.log(err)
     }
+
+    
 };
 
 export const usersResolver = () => User.find();
