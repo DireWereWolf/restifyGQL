@@ -5,17 +5,6 @@ const host = 'localhost';
 const port = 27017;
 const dbName = 'restifyGQL';
 
-// mongoose.Promise = global.Promise;
-// mongoose.createConnection(`mongodb://${host}:${port}/${dbName}`);
-//
-// const db: any = mongoose.connection;
-// db.on('error', ()=> {console.log( '---FAILED to connect to mongoose')});
-// db.once('open', () => {
-//     console.log( '+++Connected to mongoose')
-// });
-//
-// export default db;
-
 class DataBase {
     constructor() {
         this.database()
@@ -27,7 +16,8 @@ class DataBase {
     private database(): Promise<string> {
         return new Promise((resolve, reject) => {
             console.log('Connecting to Data base');
-            mongoose.connect(`mongodb://${host}:${port}/${dbName}`);
+            mongoose.Promise = global.Promise;
+            mongoose.connect(`mongodb://${host}:${port}/${dbName}`, {useMongoClient: true});
             mongoose.connection.on('error', (err) => {
                 console.log('MongoDB connection error. Please make sure MongoDB is running.', err);
                 reject('No connection for db');
@@ -43,8 +33,8 @@ class DataBase {
 
             if (!users.length) {
                 const newUser = new User({
-                    name: "Johny",
-                    email: "huy@van",
+                    name: "Jonny",
+                    email: "jnny@mail.com",
                     password: "123"
                 });
                 User.create(newUser, (err, user) => {

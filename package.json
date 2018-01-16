@@ -4,7 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon --watch 'src/**/*' -e ts,tsx --exec ts-node ./src/server.ts"
+    "start": "nodemon --watch 'src/**/*' -e ts,tsx --exec 'ts-node' ./src/server.ts",
+    "mongo:export": "mongodump -d restifyGQL -o ./mogodump",
+    "mongo:import": "mongorestore -d restifyGQL ./mogodump"
   },
   "author": "",
   "license": "ISC",

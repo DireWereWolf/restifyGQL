@@ -5,24 +5,16 @@ import userType, { userResolver, usersResolver } from './User/User.gql'
 // The GraphQL schema in string form
 const typeDefs = `
     type Query {
-        userById(id: ID!): User
-        users: [Users]
-        user: [User]
+        user(id: ID!): User
+        users: [User]
     }
-    type Users {
-        users:[User]
-    }
-    type User {
-        _id: String!
-        name: String
-        email: String
-    }
+    ${userType}
 `;
 
 // The resolvers
 const resolvers = {
     Query: {
-        userById: userResolver,
+        user: userResolver,
         users: usersResolver
     },
 };
